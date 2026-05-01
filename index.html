@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="モリヤン（@moriyant）の連絡先ページ。旧サイト「きりぃ」はそっと閉じました。">
+  <meta name="robots" content="noindex, nofollow">
+  <meta property="og:title" content="モリヤン">
+  <meta property="og:description" content="@moriyant の連絡先ページ。旧サイト「きりぃ」はそっと閉じました。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://moriyan.jp/">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%90%88%3C/text%3E%3C/svg%3E">
+  <title>モリヤン</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: #3a3a3a;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Meiryo', sans-serif;
+      overflow: hidden;
+    }
+
+    /* 散らした画像群 — 視認性のためopacityを抑える */
+    .scatter {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .scatter img {
+      position: absolute;
+      width: 180px;
+      height: auto;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+      opacity: 0.9;
+    }
+
+    .scatter img:nth-child(1) { /* sayonara — 左上 */
+      top: -30px;
+      left: -40px;
+      transform: rotate(-6deg);
+      width: 200px;
+    }
+    .scatter img:nth-child(2) { /* 2007nenga — 右上 */
+      top: 20px;
+      right: -50px;
+      transform: rotate(5deg);
+      width: 190px;
+    }
+    .scatter img:nth-child(3) { /* hikkosimasita — 左中 */
+      top: 45%;
+      left: -60px;
+      transform: translateY(-50%) rotate(3deg);
+      width: 170px;
+    }
+    .scatter img:nth-child(4) { /* gogatu — 右中 */
+      top: 50%;
+      right: -55px;
+      transform: translateY(-50%) rotate(-4deg);
+      width: 170px;
+    }
+    .scatter img:nth-child(5) { /* rousoku — 左下 */
+      bottom: -50px;
+      left: 8%;
+      transform: rotate(4deg);
+      width: 180px;
+    }
+    .scatter img:nth-child(6) { /* mousugu — 右下 */
+      bottom: -40px;
+      right: 10%;
+      transform: rotate(-5deg);
+      width: 200px;
+    }
+    .scatter img:nth-child(7) { /* newyear99 — 天中央 */
+      top: -50px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-2deg);
+      width: 190px;
+    }
+    .scatter img:nth-child(8) { /* noteside — 地中央 */
+      bottom: -55px;
+      left: 50%;
+      transform: translateX(-50%) rotate(3deg);
+      width: 200px;
+    }
+
+    /* 控えめなビネット — 中央のカードを軽く浮かせる程度 */
+    body::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at center, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.45) 70%, rgba(0,0,0,0.55) 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .card {
+      position: relative;
+      z-index: 2;
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      padding: 2.5rem 3rem;
+      max-width: 480px;
+      width: 90%;
+      text-align: center;
+      color: #fff;
+    }
+
+    .handle {
+      font-size: clamp(2rem, 8vw, 3.5rem);
+      font-weight: bold;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.4rem;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.7);
+    }
+
+    .handle-en {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.5);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 1.6rem;
+    }
+
+    .divider {
+      width: 40px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.4);
+      margin: 0 auto 1.6rem;
+      border-radius: 2px;
+    }
+
+    .bio {
+      font-size: 0.95rem;
+      line-height: 1.85;
+      color: rgba(255, 255, 255, 0.88);
+      margin-bottom: 2rem;
+    }
+
+    .contact {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      padding: 0.5rem 1.4rem;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 999px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .contact:hover,
+    .contact:focus {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.65);
+      outline: none;
+    }
+
+    .contact svg {
+      flex-shrink: 0;
+    }
+
+    /* モバイル: 散らし画像を間引き、サイズも縮小 */
+    @media (max-width: 600px) {
+      .scatter img { width: 130px !important; opacity: 0.75; }
+      .scatter img:nth-child(3),
+      .scatter img:nth-child(4) { display: none; }
+      .card { padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="scatter" aria-hidden="true">
+    <img src="images/sitetop-sayonara.png" alt="">
+    <img src="images/sitetop-2007nenga.png" alt="">
+    <img src="images/sitetop-hikkosimasita.png" alt="">
+    <img src="images/sitetop-gogatu.png" alt="">
+    <img src="images/sitetop-rousoku.png" alt="">
+    <img src="images/sitetop-mousugu.png" alt="">
+    <img src="images/sitetop-newyear99.png" alt="">
+    <img src="images/sitetop-noteside.png" alt="">
+  </div>
+  <main class="card">
+    <h1 class="handle">モリヤン</h1>
+    <p class="handle-en">moriyan</p>
+    <div class="divider" aria-hidden="true"></div>
+    <p class="bio">
+      夜更かしと親指シフトとネコを愛するモリヤンです。<br>
+      「きりぃ」はそっと畳みました。X で生存報告中。
+    </p>
+    <a class="contact" href="https://x.com/moriyant" target="_blank" rel="noopener noreferrer">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.26 5.632 5.905-5.632Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+      </svg>
+      @moriyant
+    </a>
+  </main>
+</body>
+</html>
